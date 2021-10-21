@@ -1,5 +1,6 @@
 package com.adwardstark.myvestiaireweather.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adwardstark.myvestiaireweather.databinding.FragmentListBinding
@@ -40,6 +41,7 @@ class ListFragment : Fragment() {
         return viewBinder.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,11 +56,18 @@ class ListFragment : Fragment() {
             weatherServiceViewModel.getDailyForecasts("Paris", 16)
         }
 
+        dailyForecastAdapter.onItemClicked {
+            Log.d(TAG, "->onItemClicked() $it")
+            Navigation.findNavController(viewBinder.root)
+                .navigate(ListFragmentDirections.actionListFragmentToDetailsFragment(it))
+        }
+
         weatherServiceViewModel.dailyForecasts.observe(viewLifecycleOwner) {
             viewBinder.swipeRefreshLayout.isRefreshing = false
             if(it.code == 200) {
                 Log.d(TAG, "->dailyForecasts() status: success, data: $it")
                 dailyForecastAdapter.newList(it.list)
+                viewBinder.cityTxt.text = "${it.city.cityName}, ${it.city.country}"
             } else {
                 Log.d(TAG, "->dailyForecasts() status: failed, data: $it")
             }

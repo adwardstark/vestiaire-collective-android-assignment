@@ -35,6 +35,11 @@ class DailyForecastAdapter: RecyclerView.Adapter<DailyForecastAdapter.DailyForec
     private fun currentList(): List<DayInfo> = _differList.currentList
     fun newList(list: List<DayInfo>) = _differList.submitList(list)
 
+    private var onItemClickListener: ((DayInfo) -> Unit)? = null
+    fun onItemClicked(listener: (DayInfo) -> Unit) {
+        onItemClickListener = listener
+    }
+
     override fun getItemCount(): Int = _differList.currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyForecastViewHolder {
@@ -70,6 +75,10 @@ class DailyForecastAdapter: RecyclerView.Adapter<DailyForecastAdapter.DailyForec
                 Glide.with(viewBinder.root)
                     .load(res.getString(R.string.weather_icon_url, weather[0].icon))
                     .into(viewBinder.icon)
+
+                viewBinder.weatherItem.setOnClickListener {
+                    onItemClickListener?.let { it(this) }
+                }
             }
         }
     }

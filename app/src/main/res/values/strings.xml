@@ -3,6 +3,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="weather_icon_url">"https://openweathermap.org/img/wn/%s@2x.png"</string>
+    <string name="weather_icon_large_url">"https://openweathermap.org/img/wn/%s@4x.png"</string>
     <string name="weather_icon">Weather Icon</string>
     <string name="celcius">%s°</string>
+    <string name="feels_like">Feels like %s°</string>
+    <string name="max_min">Max:%s° Min:%s°</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="speed">%s Km/hr</string>
+    <string name="percent">%s%%</string>
+    <string name="pressure_unit">%s Hg</string>
+    <string name="back">Back</string>
+    <string name="my_vestiaire_weather">My Vestiaire Weather</string>
+    <string name="vestiaire">vestiaire</string>
 </resources>

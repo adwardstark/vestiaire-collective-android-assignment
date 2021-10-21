@@ -21,4 +21,13 @@ object DateTimeUtils {
             "-"
         }
     }
+
+    fun getFormattedTime(timestamp: Long): String {
+        return try {
+            val date = Date(timestamp * 1000)
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+        } catch (e: Exception) {
+            "-"
+        }
+    }
 }
