@@ -56,29 +56,38 @@ class DetailsFragment : Fragment() {
     private fun DayInfo.setupHeaderView() {
         viewBinder.dateTxt.text = DateTimeUtils.getFormattedDate(date)
 
+        val temperatureValue: Int
         when(DateTimeUtils.getTimeOfDay()) {
             in 5..11 -> {
+                temperatureValue = temperature.morning.toInt()
+                setHoldColdStatus(temperatureValue)
                 viewBinder.temperatureTxt.text =
-                    getString(R.string.celcius, temperature.morning.toInt().toString())
+                    getString(R.string.celcius, temperatureValue.toString())
                 viewBinder.feelsLikeTxt.text =
                     getString(R.string.feels_like, feelsLike.morning.toInt().toString())
             }
             in 12..16 -> {
+                temperatureValue = temperature.day.toInt()
+                setHoldColdStatus(temperatureValue)
                 viewBinder.temperatureTxt.text =
-                    getString(R.string.celcius, temperature.day.toInt().toString())
+                    getString(R.string.celcius, temperatureValue.toString())
                 viewBinder.feelsLikeTxt.text =
                     getString(R.string.feels_like, feelsLike.day.toInt().toString())
             }
             in 17..20 -> {
+                temperatureValue = temperature.evening.toInt()
+                setHoldColdStatus(temperatureValue)
                 viewBinder.temperatureTxt.text =
-                    getString(R.string.celcius, temperature.evening.toInt().toString())
+                    getString(R.string.celcius, temperatureValue.toString())
                 viewBinder.feelsLikeTxt.text =
                     getString(R.string.feels_like, feelsLike.evening.toInt().toString())
             } else -> {
-            viewBinder.temperatureTxt.text =
-                getString(R.string.celcius, temperature.night.toInt().toString())
-            viewBinder.feelsLikeTxt.text =
-                getString(R.string.feels_like, feelsLike.night.toInt().toString())
+                temperatureValue = temperature.night.toInt()
+                setHoldColdStatus(temperatureValue)
+                viewBinder.temperatureTxt.text =
+                    getString(R.string.celcius, temperatureValue.toString())
+                viewBinder.feelsLikeTxt.text =
+                    getString(R.string.feels_like, feelsLike.night.toInt().toString())
         }
         }
 
@@ -98,5 +107,21 @@ class DetailsFragment : Fragment() {
         viewBinder.windTxt.text = getString(R.string.speed, speed.toInt().toString())
         viewBinder.humidityTxt.text = getString(R.string.percent, humidity.toString())
         viewBinder.pressureTxt.text = getString(R.string.pressure_unit, pressure.toInt().toString())
+    }
+
+    private fun setHoldColdStatus(temperatureValue: Int) {
+        when {
+            temperatureValue > 25 -> {
+                viewBinder.hotColdTxt.text = getString(R.string.hot)
+                viewBinder.hotColdTxt.visibility = View.VISIBLE
+            }
+            temperatureValue < 10 -> {
+                viewBinder.hotColdTxt.text = getString(R.string.cold)
+                viewBinder.hotColdTxt.visibility = View.VISIBLE
+            }
+            else -> {
+                viewBinder.hotColdTxt.visibility = View.GONE
+            }
+        }
     }
 }

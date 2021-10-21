@@ -19,4 +19,6 @@
     <string name="back">Back</string>
     <string name="my_vestiaire_weather">My Vestiaire Weather</string>
     <string name="vestiaire">vestiaire</string>
+    <string name="hot">Hot</string>
+    <string name="cold">Cold</string>
 </resources>
