@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardElevation="0dp"
+    app:strokeWidth=".8dp"
+    app:strokeColor="@android:color/darker_gray"
+    app:cardCornerRadius="9dp"
+    app:contentPadding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/temperatureTxt"
+            tools:text="27°"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTxt"
+            tools:text="Tuesday, 18 October"
+            android:textSize="16sp"
+            android:layout_toEndOf="@id/temperatureTxt"
+            android:layout_toStartOf="@id/icon"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptionTxt"
+            tools:text="Moderate rain"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/temperatureTxt"
+            android:layout_below="@id/dateTxt"
+            android:layout_toStartOf="@id/icon"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/icon"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/weather_icon" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
