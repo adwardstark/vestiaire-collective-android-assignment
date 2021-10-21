@@ -22,10 +22,13 @@ object DateTimeUtils {
         }
     }
 
-    fun getFormattedTime(timestamp: Long): String {
+    fun getFormattedTime(timestamp: Long, timeZone: TimeZone? = null): String {
         return try {
             val date = Date(timestamp * 1000)
-            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+            val time = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            if (timeZone != null)
+                time.timeZone = timeZone
+            return time.format(date)
         } catch (e: Exception) {
             "-"
         }
