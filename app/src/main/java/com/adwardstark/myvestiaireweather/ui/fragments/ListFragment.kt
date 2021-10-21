@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -53,7 +54,7 @@ class ListFragment : Fragment() {
 
         viewBinder.swipeRefreshLayout.isRefreshing = true
         viewBinder.swipeRefreshLayout.setOnRefreshListener {
-            weatherServiceViewModel.getDailyForecasts("Paris", 16)
+            weatherServiceViewModel.getDailyForecasts("Paris", 16, true)
         }
 
         dailyForecastAdapter.onItemClicked {
@@ -64,12 +65,12 @@ class ListFragment : Fragment() {
 
         weatherServiceViewModel.dailyForecasts.observe(viewLifecycleOwner) {
             viewBinder.swipeRefreshLayout.isRefreshing = false
-            if(it.code == 200) {
-                Log.d(TAG, "->dailyForecasts() status: success, data: $it")
-                dailyForecastAdapter.newList(it.list)
+            if(it != null) {
+                dailyForecastAdapter.newList(it.daysForecast)
                 viewBinder.cityTxt.text = "${it.city.cityName}, ${it.city.country}"
             } else {
-                Log.d(TAG, "->dailyForecasts() status: failed, data: $it")
+                Toast.makeText(requireContext(),
+                    "Something went wrong, try again!", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -18,5 +18,5 @@ interface OpenWeatherService {
         @Query("units") units: String,
         @Query("cnt") count: Int,
         @Query("appid") apiKey: String
-    ): Response<WeatherResponse>
+    ): Response<WeatherResponse?>
 }

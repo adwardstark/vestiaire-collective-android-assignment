@@ -5,11 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adwardstark.myvestiaireweather.Constants.API_KEY
-import com.adwardstark.myvestiaireweather.Constants.MODE
-import com.adwardstark.myvestiaireweather.Constants.UNITS
-import com.adwardstark.myvestiaireweather.api.OpenWeatherService
-import com.adwardstark.myvestiaireweather.data.WeatherResponse
+import com.adwardstark.myvestiaireweather.data.CityForecast
+import com.adwardstark.myvestiaireweather.data.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,31 +19,22 @@ import javax.inject.Named
  */
 @HiltViewModel
 class WeatherServiceViewModel @Inject constructor(
-    @Named("OpenWeatherService") private val weatherService: OpenWeatherService
+    @Named("WeatherRepo") private val weatherRepository: WeatherRepository
     ): ViewModel() {
 
     companion object {
         private val TAG = WeatherServiceViewModel::class.java.simpleName
     }
 
-    private val _dailyForecasts = MutableLiveData<WeatherResponse>()
-    val dailyForecasts: LiveData<WeatherResponse>
+    private val _dailyForecasts = MutableLiveData<CityForecast?>()
+    val dailyForecasts: LiveData<CityForecast?>
         get() = _dailyForecasts
 
-    fun getDailyForecasts(location: String, limit: Int) {
+    fun getDailyForecasts(location: String, limit: Int, fromNetwork: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
-            val request = weatherService.getDailyForecast(
-                location = location,
-                mode = MODE,
-                units = UNITS,
-                count = limit,
-                apiKey = API_KEY,
-            )
-            if(request.isSuccessful) {
-                _dailyForecasts.postValue(request.body())
-            } else {
-                Log.d(TAG, "->getDailyForecasts() errorCode: ${request.code()}")
-            }
+            val forecasts = weatherRepository.getDailyForecast(location, limit, fromNetwork)
+            Log.d(TAG, "->getDailyForecasts() response: $forecasts")
+            _dailyForecasts.postValue(forecasts)
         }
     }
 }
