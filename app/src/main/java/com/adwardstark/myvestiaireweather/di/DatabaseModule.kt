@@ -3,6 +3,7 @@ package com.adwardstark.myvestiaireweather.di
 import android.content.Context
 import androidx.room.Room
 import com.adwardstark.myvestiaireweather.api.OpenWeatherService
+import com.adwardstark.myvestiaireweather.data.IRepository
 import com.adwardstark.myvestiaireweather.data.WeatherRepository
 import com.adwardstark.myvestiaireweather.db.WeatherDB
 import com.adwardstark.myvestiaireweather.db.WeatherDao
@@ -39,7 +40,7 @@ class DatabaseModule {
     @Singleton
     @Named("WeatherRepo")
     fun provideWeatherRepo(@Named("OpenWeatherService") weatherService: OpenWeatherService,
-                           @Named("WeatherDao") weatherDao: WeatherDao): WeatherRepository {
+                           @Named("WeatherDao") weatherDao: WeatherDao): IRepository {
         return WeatherRepository(weatherService, weatherDao)
     }
 }

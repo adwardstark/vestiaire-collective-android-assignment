@@ -14,15 +14,13 @@ import javax.inject.Named
 class WeatherRepository @Inject constructor(
     @Named("OpenWeatherService") private val weatherService: OpenWeatherService,
     @Named("WeatherDao") private val weatherDao: WeatherDao
-    ) {
+    ): IRepository {
 
     companion object {
         private val TAG = WeatherRepository::class.java.simpleName
     }
 
-    suspend fun getDailyForecast(location: String,
-                                 limit: Int,
-                                 fromNetwork: Boolean = false): CityForecast? {
+    override suspend fun getDailyForecast(location: String, limit: Int, fromNetwork: Boolean): CityForecast? {
         Log.d(TAG, "->getDailyForecast() fromNetwork: $fromNetwork")
         return if(!fromNetwork) {
             weatherDao.getDailyForecasts() ?: getDailyForecastFromNetwork(location, limit)

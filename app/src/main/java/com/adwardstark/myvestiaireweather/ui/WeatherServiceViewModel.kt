@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adwardstark.myvestiaireweather.data.CityForecast
-import com.adwardstark.myvestiaireweather.data.WeatherRepository
+import com.adwardstark.myvestiaireweather.data.IRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,8 +18,8 @@ import javax.inject.Named
  * @author github.com/adwardstark
  */
 @HiltViewModel
-class WeatherServiceViewModel @Inject constructor(
-    @Named("WeatherRepo") private val weatherRepository: WeatherRepository
+open class WeatherServiceViewModel @Inject constructor(
+    @Named("WeatherRepo") private val weatherRepository: IRepository
     ): ViewModel() {
 
     companion object {
